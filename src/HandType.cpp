@@ -23,7 +23,7 @@ namespace {
         static std::uint16_t thunk(RE::TESForm* a_form)
         {
             using func_t = void*(RE::TESForm*);
-            static REL::Relocation<func_t> getEquipType{ REL::ID(14218) };  // TESBoundObject::GetEquipType
+            static REL::Relocation<func_t> getEquipType{ RELOCATION_ID(14123, 14218) };  // TESBoundObject::GetEquipType
             const auto equipType = getEquipType(a_form);
             if (!a_form || !equipType) {
                 return 0;
@@ -82,8 +82,8 @@ namespace HandType {
     void Install()
     {
         auto& trampoline = SKSE::GetTrampoline();
-        trampoline.write_branch<6>(REL::ID(14220).address(), EquippedItemType::thunk);  // TESForm::GetEquippedItemTypeId
-        FindIdle::func = trampoline.write_call<5>(REL::ID(38949).address() + 0x73, FindIdle::thunk);  // action executor -> idle lookup
+        trampoline.write_branch<6>(RELOCATION_ID(14125, 14220).address(), EquippedItemType::thunk);  // TESForm::GetEquippedItemTypeId
+        FindIdle::func = trampoline.write_call<5>(RELOCATION_ID(37998, 38949).address() + REL::Relocate(0x3D, 0x73), FindIdle::thunk);  // action executor -> idle lookup
     }
 
     void LoadActions()

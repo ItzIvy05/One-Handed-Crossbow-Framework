@@ -31,14 +31,14 @@ namespace {
     RE::AlchemyItem* GetPoison(RE::InventoryEntryData* a_entry)
     {
         using func_t = RE::AlchemyItem*(RE::InventoryEntryData*);
-        static REL::Relocation<func_t> func{ REL::ID(15999) };  // InventoryEntryData::GetPoison
+        static REL::Relocation<func_t> func{ RELOCATION_ID(15761, 15999) };  // InventoryEntryData::GetPoison
         return func(a_entry);
     }
 
     void DecrementPoisonCount(RE::InventoryEntryData* a_entry)
     {
         using func_t = void(RE::InventoryEntryData*);
-        static REL::Relocation<func_t> func{ REL::ID(16000) };  // InventoryEntryData::DecrementPoisonCount
+        static REL::Relocation<func_t> func{ RELOCATION_ID(15762, 16000) };  // InventoryEntryData::DecrementPoisonCount
         func(a_entry);
     }
 
@@ -302,7 +302,7 @@ namespace Fire {
 
         const bool latest = REL::Module::get().version() >= SKSE::RUNTIME_SSE_1_7_104;
         auto& trampoline = SKSE::GetTrampoline();
-        const auto constructor = REL::ID(44100).address();  // Projectile::Constructor
+        const auto constructor = RELOCATION_ID(42920, 44100).address();  // Projectile::Constructor
         ProjectileTemper::func = trampoline.write_call<5>(constructor + (latest ? 0x2CA : 0x2B1), ProjectileTemper::thunk);  // ActorProcess::GetEquippedWeapon
         trampoline.write_call<5>(constructor + (latest ? 0x2DD : 0x2C4), ProjectileTemper::thunk);
     }

@@ -54,12 +54,12 @@ namespace Player {
     {
         const bool latest = REL::Module::get().version() >= SKSE::RUNTIME_SSE_1_7_104;
         auto& trampoline = SKSE::GetTrampoline();
-        const auto process = REL::ID(42421).address();  // AttackBlockHandler::ProcessButton
+        const auto process = RELOCATION_ID(41347, 42421).address();  // AttackBlockHandler::ProcessButton
         DualAttack::func = trampoline.write_call<5>(process + (latest ? 0xC7 : 0xC1), DualAttack::thunk);
         Attack<true>::func = trampoline.write_call<5>(process + (latest ? 0xD2 : 0xCC), Attack<true>::thunk);
         Attack<false>::func = trampoline.write_call<5>(process + (latest ? 0xDD : 0xD7), Attack<false>::thunk);
-        trampoline.write_call<5>(process + (latest ? 0x1BE : 0x1A3), DualAttack::thunk);
-        trampoline.write_call<5>(process + (latest ? 0x249 : 0x228), Attack<true>::thunk);
-        trampoline.write_call<5>(process + (latest ? 0x286 : 0x262), Attack<false>::thunk);
+        trampoline.write_call<5>(process + REL::Relocate(0x156, latest ? 0x1BE : 0x1A3), DualAttack::thunk);
+        trampoline.write_call<5>(process + REL::Relocate(0x1E1, latest ? 0x249 : 0x228), Attack<true>::thunk);
+        trampoline.write_call<5>(process + REL::Relocate(0x21E, latest ? 0x286 : 0x262), Attack<false>::thunk);
     }
 }
