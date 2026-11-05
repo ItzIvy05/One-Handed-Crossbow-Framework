@@ -4,6 +4,7 @@
 #include "HandType.h"
 #include "NPC.h"
 #include "Player.h"
+#include "Skill.h"
 
 namespace {
     void OnMessage(SKSE::MessagingInterface::Message* a_message)
@@ -16,6 +17,7 @@ namespace {
             Player::Install();
             Fire::Install();
             NPC::Install();
+            Skill::Install();
             Ammo::Register();
             break;
         case SKSE::MessagingInterface::kPreLoadGame:
